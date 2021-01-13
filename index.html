@@ -11,9 +11,10 @@
       <h1>Opposite Words</h1>
       <br>
       <div>
-        <form id="inputForm">
+        <form id="inputForm" autocomplete="off">
           Word to find opposite of:
-          <input type="text" id="word" placeholder="search here">
+          <input type="text" id="word" placeholder="search here" list="suggestions">
+          <datalist id="suggestions"> </datalist>
           <input type="submit" value="search">
         </form>
       </div>

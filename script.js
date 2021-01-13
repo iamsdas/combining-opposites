@@ -22,4 +22,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		// dont change the page on submit
 		return false
 	}
+	// add suggestions while typing
+	inputField.addEventListener("input", autocomplete)
 })
+
+function autocomplete(event) {
+	const datalist = document.getElementById('suggestions')
+	// clear suggestions list on change
+	datalist.innerHTML = ''
+	// if input is not empty get suggestions
+	if (event.target.value) {
+		fetch(`https://api.datamuse.com/sug?s=${ event.target.value }`)
+			.then(response => response.json())
+			.then(arr => arr.map(obj => obj['word']))
+			.then(arr => {
+				arr.forEach(word => {
+					let option = document.createElement('option')
+					option.value = word
+					datalist.appendChild(option)
+				});
+			})
+	}
+}
