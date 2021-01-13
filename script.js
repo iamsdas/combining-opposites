@@ -1,3 +1,4 @@
+// do on load
 document.addEventListener('DOMContentLoaded', () => {
 	// get DOM elements
 	const inputForm = document.getElementById('inputForm')
@@ -7,18 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	inputField.value = ""
 	// get results from API
 	inputForm.onsubmit = () => {
-		let resultLine
-		fetch(`https://api.datamuse.com/words?rel_ant=${ inputField.value }`)
-			.then(response => response.json())
-			.then(arr => arr.map(obj => obj['word']))
-			.then(arr => {
-				resultLine = ""
-				for (const word of arr) {
-					resultLine += word + " "
-				}
-				resDiv.innerText = `The opposite words of ${ inputField.value } are ` + resultLine
-			})
-			.catch(err => { console.log(err) })
+		clear(resDiv)
+		resDiv.appendChild(getOpposite(inputField.value))
 		// dont change the page on submit
 		return false
 	}
@@ -29,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function autocomplete(event) {
 	const datalist = document.getElementById('suggestions')
 	// clear suggestions list on change
-	datalist.innerHTML = ''
+	clear(datalist)
 	// if input is not empty get suggestions
 	if (event.target.value) {
 		fetch(`https://api.datamuse.com/sug?s=${ event.target.value }`)
@@ -43,4 +34,35 @@ function autocomplete(event) {
 				});
 			})
 	}
+}
+
+// remove all children
+function clear(element) {
+	element.innerHTML = ''
+}
+
+// returns a list of opposite words and their definitions
+function getOpposite(input) {
+	let list = document.createElement('dl')
+	fetch(`https://api.datamuse.com/words?md=d&rel_ant=${ input }`)
+		.then(response => response.json())
+		.then(arr => {
+			arr.forEach(pair => {
+				let word = document.createElement('dt')
+				word.appendChild(document.createTextNode(pair['word']))
+				list.appendChild(word)
+				let def = document.createElement('dd')
+				def.appendChild(document.createTextNode((getFirstDef(pair['defs']))))
+				list.appendChild(def)
+			});
+		})
+		.catch(err => { console.log(err) })
+	return list
+}
+
+function getFirstDef(list) {
+	// get first definition
+	let res = list[0]
+	// remove first word of sentence (for: adj, noun, v)
+	return res.substr(res.indexOf("\t") + 1)
 }
