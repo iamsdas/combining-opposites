@@ -1,0 +1,15 @@
+html{
+	height: 100vh;
+}
+body {
+	height: 100%;
+}
+center {
+	font-size: large;
+	color: grey;
+}
+.navbar-brand {
+	font-family: 'Crafty Girls';
+	font-size: x-large;
+	font-weight: 600;
+}
