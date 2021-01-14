@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	inputForm.onsubmit = () => {
 		clear(resDiv)
 		resDiv.appendChild(getOpposite(inputField.value))
+		resDiv.appendChild(getSimilar(inputField.value))
 		// dont change the page on submit
 		return false
 	}
@@ -44,7 +45,30 @@ function clear(element) {
 // returns a list of opposite words and their definitions
 function getOpposite(input) {
 	let list = document.createElement('dl')
+	list.className = "col-sm"
+	list.innerHTML = "<h2>Opposite words<h2>"
 	fetch(`https://api.datamuse.com/words?md=d&rel_ant=${ input }`)
+		.then(response => response.json())
+		.then(arr => {
+			arr.forEach(pair => {
+				let word = document.createElement('dt')
+				word.appendChild(document.createTextNode(pair['word']))
+				list.appendChild(word)
+				let def = document.createElement('dd')
+				def.appendChild(document.createTextNode((getFirstDef(pair['defs']))))
+				list.appendChild(def)
+			});
+		})
+		.catch(err => { console.log(err) })
+	return list
+}
+
+// returns a list of similar words and their definitions
+function getSimilar(input) {
+	let list = document.createElement('dl')
+	list.className = "col-sm"
+	list.innerHTML = "<h2>Similar words<h2>"
+	fetch(`https://api.datamuse.com/words?md=d&ml=${ input }`)
 		.then(response => response.json())
 		.then(arr => {
 			arr.forEach(pair => {
