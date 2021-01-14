@@ -13,8 +13,8 @@ center {
 	font-size: x-large;
 	font-weight: 600;
 }
-.results {
-	padding-top: 10px;
+#results {
+	padding-top: 20px;
 }
 dt {
 	font-family: Arvo;
@@ -23,4 +23,8 @@ dt {
 dd {
 	font-family: Voces;
 	font-size: large;
+}
+h3 {
+	font-family: Merriweather;
+	font-size: x-large;
 }
