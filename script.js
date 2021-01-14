@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const inputForm = document.getElementById('inputForm')
 	const resDiv = document.getElementById('results')
 	const inputField = document.getElementById('word')
+	// initialize awesomplete
+	const awsomeplete = new Awesomplete(inputField)
 	// reset input field on reload
 	inputField.value = ""
 	// get results from API
@@ -15,26 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
 		return false
 	}
 	// add suggestions while typing
-	inputField.addEventListener("input", autocomplete)
+	inputField.addEventListener("input", () => { autocomplete(inputField, awsomeplete) })
 })
 
-function autocomplete(event) {
-	const datalist = document.getElementById('suggestions')
-	// clear suggestions list on change
-	clear(datalist)
+function autocomplete(input, awsomeplete) {
 	// if input is not empty get suggestions
-	if (event.target.value) {
-		fetch(`https://api.datamuse.com/sug?s=${ event.target.value }`)
+	if (input.value) {
+		fetch(`https://api.datamuse.com/sug?s=${ input.value }`)
 			.then(response => response.json())
 			.then(arr => arr.map(obj => obj['word']))
 			.then(arr => {
-				arr.forEach(word => {
-					let option = document.createElement('option')
-					option.value = word
-					datalist.appendChild(option)
-				});
+				awsomeplete.list = arr
 			})
 	}
+	awsomeplete.evaluate()
 }
 
 // remove all children
