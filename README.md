@@ -1,10 +1,10 @@
 # Combining Opposites
 
 ## About
-This is a simple frontend website made with HTML and JavaScript which displays the lists of similar and opposite words of whatever entered with the help of the datamuse API. 
+This is a frontend website made with simple HTML, CSS and JavaScript which displays the lists of similar and opposite words of whatever entered with the help of the datamuse API. 
 
 ## Usage
-clone the project open and open the `index.html` file with any modern browser.
+Clone the project open and open the `index.html` file with any modern browser.
 #### OR
 Simply go to [this](https://iamsdas.github.io/combining-opposites/) link
 
