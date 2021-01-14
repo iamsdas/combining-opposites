@@ -21,15 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function autocomplete(input, awsomeplete) {
-	// if input is not empty get suggestions
-	if (input.value) {
-		fetch(`https://api.datamuse.com/sug?s=${ input.value }`)
-			.then(response => response.json())
-			.then(arr => arr.map(obj => obj['word']))
-			.then(arr => {
-				awsomeplete.list = arr
-			})
-	}
+	fetch(`https://api.datamuse.com/sug?s=${ input.value }`)
+		.then(response => response.json())
+		.then(arr => arr.map(obj => obj['word']))
+		.then(arr => {
+			awsomeplete.list = arr
+		})
 	awsomeplete.evaluate()
 }
 
