@@ -46,7 +46,7 @@ function clear(element) {
 function getOpposite(input) {
 	let list = document.createElement('dl')
 	list.className = "col-sm"
-	list.innerHTML = "<h2>Opposite words<h2>"
+	list.innerHTML = "<h3>Opposite words<h3>"
 	fetch(`https://api.datamuse.com/words?md=d&rel_ant=${ input }`)
 		.then(response => response.json())
 		.then(arr => {
@@ -67,7 +67,7 @@ function getOpposite(input) {
 function getSimilar(input) {
 	let list = document.createElement('dl')
 	list.className = "col-sm"
-	list.innerHTML = "<h2>Similar words<h2>"
+	list.innerHTML = "<h3>Similar words<h3>"
 	fetch(`https://api.datamuse.com/words?md=d&ml=${ input }`)
 		.then(response => response.json())
 		.then(arr => {
