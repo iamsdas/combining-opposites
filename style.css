@@ -16,3 +16,10 @@ center {
 .results {
 	padding-top: 10px;
 }
+dt {
+	font-family: Arvo;
+	font-size: larger;
+}
+dd {
+	font-family: Voces;
+}
